@@ -238,6 +238,6 @@ bool receive_packet(void* buf, uint8_t len)
 void reconfigure_radio(provision_packet* input)
 {
 	radio.stopListening();
-	radio.openWritingPipe(input->address);
+	radio.openReadingPipe(1, input->address);
 	radio.startListening();
 }
