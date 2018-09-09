@@ -118,7 +118,7 @@ int main(void)
 	// I2C init
 	I2CSPM_Init_TypeDef i2cspm_init_struct = I2CSPM_INIT_DEFAULT;
 	I2CSPM_Init(&i2cspm_init_struct);
-	i2c = i2cspm_init_struct.port;
+	i2c = I2C0;
 
 	SLEEP_Init(NULL, NULL);
 	SLEEP_SleepBlockBegin(sleepEM3); // EM3 and EM4 are blocked
@@ -192,7 +192,7 @@ int main(void)
 			{
 				receive_packet(&node_provision_packet, provision_packet_size);
 				reconfigure_radio(&node_provision_packet);
-				lastMsTicks = millis();
+				lastMsTicks = 	millis();
 				node_info_packet buf;
 				buf.packet_type = node_info_packet_type;
 				if(si_available) buf.si7020_available = 1;
@@ -214,6 +214,8 @@ int main(void)
 				buf.hardware_revision[0] = '0';
 				buf.hardware_revision[1] = '0';
 #endif
+				buf.unique_id_0 =  *(uint32_t*)0xFE081F0;
+				buf.unique_id_1 =  *(uint32_t*)0xFE081F4;
 				transmit_packet(&buf, node_info_packet_size);
 				RTCDRV_StopTimer(rtc_id);
 				RTCDRV_StartTimer(
@@ -234,6 +236,7 @@ int main(void)
 	ack.msWait = MS_DELAY_BETWEEN_PACKETS;
 	uint8_t failures = 0;
 	node_data.packet_type = node_data_packet_type;
+	node_data.node_id = node_provision_packet.node_id;
 	/* Infinite loop */
 	while (1) {
 
@@ -252,6 +255,7 @@ int main(void)
 		{
 			failures = 0;
 		}
+		println("msWait: %i", ack.msWait);
 
 		// If we failed x times in a row, invoke a SW reset.
 		if(failures == 8)

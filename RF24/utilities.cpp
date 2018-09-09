@@ -15,7 +15,7 @@
 #include "em_usart.h"
 #include "em_gpio.h"
 
-#define DEBUG
+//#define DEBUG
 
 HardwareSPI _SPI;
 
@@ -192,6 +192,7 @@ uint8_t hex_to_decimal(uint8_t input)
 void prepare_sleep(void)
 {
 	print("Going to sleep\n");
+	radio.powerDown();
 #if defined(DEBUG)
 	//Wait for the LEUART to clear out
 	while(USART_StatusGet(UART0) & (1 << 3));
@@ -206,17 +207,10 @@ void prepare_wakeup(void)
 
 bool transmit_packet(void* buf, uint8_t len)
 {
-	uint8_t* current = reinterpret_cast<uint8_t*>(buf);
-	for(int i = 0; i < len; i++)
-	{
-		uint8_t chartosend = current[i];
-		USART_Tx(UART0, chartosend);
-	}
 	while(!radio.isPowerUpReady());
 	radio.stopListening();
 	bool success =  radio.write(buf, len);
 	radio.startListening();
-	println("");
 	return success;
 }
 

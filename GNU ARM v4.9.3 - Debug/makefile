@@ -48,7 +48,7 @@ all: RF24_test_STK.axf
 RF24_test_STK.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU ARM C++ Linker'
-	arm-none-eabi-g++ -g -gdwarf-2 -mcpu=cortex-m3 -mthumb -T "RF24_test_STK.ld" --specs=nosys.specs -Xlinker --gc-sections -Xlinker -Map="RF24_test_STK.map" --specs=nano.specs -o RF24_test_STK.axf "./src/main.o" "./emlib/em_cmu.o" "./emlib/em_core.o" "./emlib/em_dbg.o" "./emlib/em_dma.o" "./emlib/em_emu.o" "./emlib/em_gpio.o" "./emlib/em_i2c.o" "./emlib/em_int.o" "./emlib/em_leuart.o" "./emlib/em_rmu.o" "./emlib/em_rtc.o" "./emlib/em_system.o" "./emlib/em_timer.o" "./emlib/em_usart.o" "./RF24/HardwareSPI.o" "./RF24/RF24.o" "./RF24/ustimer.o" "./RF24/utilities.o" "./Drivers/BMP280.o" "./Drivers/i2cspm.o" "./Drivers/rtcdriver.o" "./Drivers/si7013.o" "./Drivers/sleep.o" "./CMSIS/EFM32GG/startup_efm32gg.o" "./CMSIS/EFM32GG/system_efm32gg.o" -Wl,--start-group -lgcc -lc -lnosys -Wl,--end-group
+	arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -T "RF24_test_STK.ld" --specs=nosys.specs -Xlinker --gc-sections -Xlinker -Map="RF24_test_STK.map" --specs=nano.specs -o RF24_test_STK.axf "./src/main.o" "./emlib/em_cmu.o" "./emlib/em_core.o" "./emlib/em_dbg.o" "./emlib/em_dma.o" "./emlib/em_emu.o" "./emlib/em_gpio.o" "./emlib/em_i2c.o" "./emlib/em_int.o" "./emlib/em_leuart.o" "./emlib/em_rmu.o" "./emlib/em_rtc.o" "./emlib/em_system.o" "./emlib/em_timer.o" "./emlib/em_usart.o" "./RF24/HardwareSPI.o" "./RF24/RF24.o" "./RF24/ustimer.o" "./RF24/utilities.o" "./Drivers/BMP280.o" "./Drivers/i2cspm.o" "./Drivers/rtcdriver.o" "./Drivers/si7013.o" "./Drivers/sleep.o" "./CMSIS/EFM32GG/startup_efm32gg.o" "./CMSIS/EFM32GG/system_efm32gg.o" -Wl,--start-group -lgcc -lc -lnosys -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

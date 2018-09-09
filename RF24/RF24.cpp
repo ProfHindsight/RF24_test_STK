@@ -765,13 +765,13 @@ void RF24::powerUpNoWait(void)
       // For nRF24L01+ to go from power down mode to TX or RX mode it must first pass through stand-by mode.
 	  // There must be a delay of Tpd2stby (see Table 16.) after the nRF24L01+ leaves power down mode before
 	  // the CEis set high. - Tpd2stby can be up to 5ms per the 1.0 datasheet
-      powerUpMillis = millis();
    }
+   powerUpMillis = millis();
 }
 
 bool RF24::isPowerUpReady(void)
 {
-	return (millis() - powerUpMillis) > 3;
+	return (millis() - powerUpMillis) > 5;
 }
 
 /******************************************************************/

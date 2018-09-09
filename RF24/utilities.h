@@ -10,8 +10,8 @@
 
 
 #define discover_packet_size	32
-#define provision_packet_size   14
-#define node_info_packet_size   5
+#define provision_packet_size   10
+#define node_info_packet_size   14
 #define node_data_packet_size   18
 #define gateway_ack_packet_size 6
 
@@ -46,6 +46,8 @@ struct node_info_packet
 	uint8_t bmp280_available;
 	uint8_t si7020_available;
 	uint8_t hardware_revision[2];
+	uint32_t unique_id_0;
+	uint32_t unique_id_1;
 };
 
 struct node_data_packet
