@@ -14,6 +14,7 @@
 #define node_info_packet_size   14
 #define node_data_packet_size   18
 #define gateway_ack_packet_size 6
+#define minimalist_packet_size	30
 
 
 enum packet_types
@@ -22,7 +23,23 @@ enum packet_types
 	provision_packet_type = 2,
 	node_info_packet_type = 3,
 	node_data_packet_type = 4,
-	gateway_ack_packet_type = 5
+	gateway_ack_packet_type = 5,
+	minimalist_packet_type = 6
+};
+
+struct minimalist_packet
+{
+	uint8_t packet_type;
+	uint8_t VBUS_available;
+	uint8_t bmp280_available;
+	uint8_t si7020_available;
+	uint8_t hardware_revision[2];
+	uint32_t unique_id_0;
+	uint32_t unique_id_1;
+	uint32_t BMP280_pres;
+	int32_t BMP280_temp;
+	uint32_t Si7020_humid;
+	int32_t Si7020_temp;
 };
 
 struct discover_packet

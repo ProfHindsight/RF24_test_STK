@@ -2411,30 +2411,30 @@ OUTPUT(RF24_test_STK.axf elf32-littlearm)
  .comment       0x00000000       0x71 ./Drivers/sleep.o
  .comment       0x00000000       0x71 ./CMSIS/EFM32GG/system_efm32gg.o
 
-.debug_info     0x00000000    0x187ad
- .debug_info    0x00000000     0x144b ./src/main.o
- .debug_info    0x0000144b     0x2c5c ./emlib/em_cmu.o
- .debug_info    0x000040a7      0xdf7 ./emlib/em_core.o
- .debug_info    0x00004e9e     0x168a ./emlib/em_dma.o
- .debug_info    0x00006528      0xec5 ./emlib/em_emu.o
- .debug_info    0x000073ed      0x7ca ./emlib/em_gpio.o
- .debug_info    0x00007bb7      0xb54 ./emlib/em_i2c.o
- .debug_info    0x0000870b      0x5d0 ./emlib/em_rmu.o
- .debug_info    0x00008cdb      0x409 ./emlib/em_rtc.o
- .debug_info    0x000090e4      0x26a ./emlib/em_system.o
- .debug_info    0x0000934e      0x92d ./emlib/em_timer.o
- .debug_info    0x00009c7b     0x1375 ./emlib/em_usart.o
- .debug_info    0x0000aff0      0xaa3 ./RF24/HardwareSPI.o
- .debug_info    0x0000ba93     0x4c5c ./RF24/RF24.o
- .debug_info    0x000106ef     0x158a ./RF24/ustimer.o
- .debug_info    0x00011c79     0x2105 ./RF24/utilities.o
- .debug_info    0x00013d7e     0x1087 ./Drivers/BMP280.o
- .debug_info    0x00014e05      0xa17 ./Drivers/i2cspm.o
- .debug_info    0x0001581c     0x149f ./Drivers/rtcdriver.o
- .debug_info    0x00016cbb      0xaab ./Drivers/si7013.o
- .debug_info    0x00017766      0x89f ./Drivers/sleep.o
- .debug_info    0x00018005       0xff ./CMSIS/EFM32GG/startup_efm32gg.o
- .debug_info    0x00018104      0x6a9 ./CMSIS/EFM32GG/system_efm32gg.o
+.debug_info     0x00000000    0x187b3
+ .debug_info    0x00000000     0x1451 ./src/main.o
+ .debug_info    0x00001451     0x2c5c ./emlib/em_cmu.o
+ .debug_info    0x000040ad      0xdf7 ./emlib/em_core.o
+ .debug_info    0x00004ea4     0x168a ./emlib/em_dma.o
+ .debug_info    0x0000652e      0xec5 ./emlib/em_emu.o
+ .debug_info    0x000073f3      0x7ca ./emlib/em_gpio.o
+ .debug_info    0x00007bbd      0xb54 ./emlib/em_i2c.o
+ .debug_info    0x00008711      0x5d0 ./emlib/em_rmu.o
+ .debug_info    0x00008ce1      0x409 ./emlib/em_rtc.o
+ .debug_info    0x000090ea      0x26a ./emlib/em_system.o
+ .debug_info    0x00009354      0x92d ./emlib/em_timer.o
+ .debug_info    0x00009c81     0x1375 ./emlib/em_usart.o
+ .debug_info    0x0000aff6      0xaa3 ./RF24/HardwareSPI.o
+ .debug_info    0x0000ba99     0x4c5c ./RF24/RF24.o
+ .debug_info    0x000106f5     0x158a ./RF24/ustimer.o
+ .debug_info    0x00011c7f     0x2105 ./RF24/utilities.o
+ .debug_info    0x00013d84     0x1087 ./Drivers/BMP280.o
+ .debug_info    0x00014e0b      0xa17 ./Drivers/i2cspm.o
+ .debug_info    0x00015822     0x149f ./Drivers/rtcdriver.o
+ .debug_info    0x00016cc1      0xaab ./Drivers/si7013.o
+ .debug_info    0x0001776c      0x89f ./Drivers/sleep.o
+ .debug_info    0x0001800b       0xff ./CMSIS/EFM32GG/startup_efm32gg.o
+ .debug_info    0x0001810a      0x6a9 ./CMSIS/EFM32GG/system_efm32gg.o
 
 .debug_abbrev   0x00000000     0x43c7
  .debug_abbrev  0x00000000      0x3ae ./src/main.o
@@ -2582,50 +2582,50 @@ OUTPUT(RF24_test_STK.axf elf32-littlearm)
  .debug_line    0x00007448       0xcd ./CMSIS/EFM32GG/startup_efm32gg.o
  .debug_line    0x00007515      0x472 ./CMSIS/EFM32GG/system_efm32gg.o
 
-.debug_str      0x00000000     0x6210
- .debug_str     0x00000000      0xc23 ./src/main.o
-                                0xdcd (size before relaxing)
- .debug_str     0x00000c23      0xf0e ./emlib/em_cmu.o
+.debug_str      0x00000000     0x6227
+ .debug_str     0x00000000      0xc3a ./src/main.o
+                                0xde4 (size before relaxing)
+ .debug_str     0x00000c3a      0xf0e ./emlib/em_cmu.o
                                0x10e3 (size before relaxing)
- .debug_str     0x00001b31      0x5aa ./emlib/em_core.o
+ .debug_str     0x00001b48      0x5aa ./emlib/em_core.o
                                 0x835 (size before relaxing)
- .debug_str     0x000020db      0x5ee ./emlib/em_dma.o
+ .debug_str     0x000020f2      0x5ee ./emlib/em_dma.o
                                 0xd90 (size before relaxing)
- .debug_str     0x000026c9      0x3c2 ./emlib/em_emu.o
+ .debug_str     0x000026e0      0x3c2 ./emlib/em_emu.o
                                 0x85d (size before relaxing)
- .debug_str     0x00002a8b      0x33a ./emlib/em_gpio.o
+ .debug_str     0x00002aa2      0x33a ./emlib/em_gpio.o
                                 0x5e5 (size before relaxing)
- .debug_str     0x00002dc5      0x1ea ./emlib/em_i2c.o
+ .debug_str     0x00002ddc      0x1ea ./emlib/em_i2c.o
                                 0x814 (size before relaxing)
- .debug_str     0x00002faf      0x140 ./emlib/em_rmu.o
+ .debug_str     0x00002fc6      0x140 ./emlib/em_rmu.o
                                 0x3ed (size before relaxing)
- .debug_str     0x000030ef       0xb8 ./emlib/em_rtc.o
+ .debug_str     0x00003106       0xb8 ./emlib/em_rtc.o
                                 0x2cb (size before relaxing)
- .debug_str     0x000031a7       0xa9 ./emlib/em_system.o
+ .debug_str     0x000031be       0xa9 ./emlib/em_system.o
                                 0x2bf (size before relaxing)
- .debug_str     0x00003250      0x743 ./emlib/em_timer.o
+ .debug_str     0x00003267      0x743 ./emlib/em_timer.o
                                 0x96d (size before relaxing)
- .debug_str     0x00003993      0x8bf ./emlib/em_usart.o
+ .debug_str     0x000039aa      0x8bf ./emlib/em_usart.o
                                 0xe27 (size before relaxing)
- .debug_str     0x00004252      0x1a0 ./RF24/HardwareSPI.o
+ .debug_str     0x00004269      0x1a0 ./RF24/HardwareSPI.o
                                 0xb74 (size before relaxing)
- .debug_str     0x000043f2      0xea7 ./RF24/RF24.o
+ .debug_str     0x00004409      0xea7 ./RF24/RF24.o
                                0x135b (size before relaxing)
- .debug_str     0x00005299      0x155 ./RF24/ustimer.o
+ .debug_str     0x000052b0      0x155 ./RF24/ustimer.o
                                 0xf28 (size before relaxing)
- .debug_str     0x000053ee      0x20d ./RF24/utilities.o
+ .debug_str     0x00005405      0x20d ./RF24/utilities.o
                                0x1cd6 (size before relaxing)
- .debug_str     0x000055fb      0x6e5 ./Drivers/BMP280.o
+ .debug_str     0x00005612      0x6e5 ./Drivers/BMP280.o
                                 0xaa1 (size before relaxing)
- .debug_str     0x00005ce0       0x25 ./Drivers/i2cspm.o
+ .debug_str     0x00005cf7       0x25 ./Drivers/i2cspm.o
                                 0x974 (size before relaxing)
- .debug_str     0x00005d05      0x23f ./Drivers/rtcdriver.o
+ .debug_str     0x00005d1c      0x23f ./Drivers/rtcdriver.o
                                 0xc6c (size before relaxing)
- .debug_str     0x00005f44      0x118 ./Drivers/si7013.o
+ .debug_str     0x00005f5b      0x118 ./Drivers/si7013.o
                                 0x469 (size before relaxing)
- .debug_str     0x0000605c       0xd6 ./Drivers/sleep.o
+ .debug_str     0x00006073       0xd6 ./Drivers/sleep.o
                                 0x4ce (size before relaxing)
- .debug_str     0x00006132       0xde ./CMSIS/EFM32GG/system_efm32gg.o
+ .debug_str     0x00006149       0xde ./CMSIS/EFM32GG/system_efm32gg.o
                                 0x4a4 (size before relaxing)
 
 .debug_frame    0x00000000     0x2684

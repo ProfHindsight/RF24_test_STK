@@ -22,12 +22,11 @@
 #define Si7020_device_address 	0x80
 #define BMP280_device_address	0xEE
 
-#define MS_DELAY_BETWEEN_PACKETS	5000
+#define MS_TO_SLEEP				60000
 
 I2C_TypeDef* i2c;
 RTCDRV_TimerID_t rtc_id;
-provision_packet node_provision_packet;
-node_data_packet node_data;
+minimalist_packet data;
 bool bmp_available = false;
 bool si_available = false;
 
@@ -81,9 +80,9 @@ void read_sensors(void)
 	*/
 	if(bmp_available)
 	{
-	  bmp280_read_pressure_temperature(&node_data.BMP280_pres, &node_data.BMP280_temp);
+	  bmp280_read_pressure_temperature(&data.BMP280_pres, &data.BMP280_temp);
 	  bmp280_set_power_mode(0x01);
-	  print("BMP280 Temp: %d\nBMP280 pres: %d\n", node_data.BMP280_temp, node_data.BMP280_pres);
+	  print("BMP280 Temp: %d\nBMP280 pres: %d\n", data.BMP280_temp, data.BMP280_pres);
 	}
 
 
@@ -92,8 +91,8 @@ void read_sensors(void)
 	*/
 	if(si_available)
 	{
-	  Si7013_MeasureRHAndTemp(i2c, Si7020_device_address, &node_data.Si7020_humid, &node_data.Si7020_temp);
-	  print("Si7020 Temp: %d\nSi7020 RH: %d\n", node_data.Si7020_temp, node_data.Si7020_humid);
+	  Si7013_MeasureRHAndTemp(i2c, Si7020_device_address, &data.Si7020_humid, &data.Si7020_temp);
+	  print("Si7020 Temp: %d\nSi7020 RH: %d\n", data.Si7020_temp, data.Si7020_humid);
 	}
 }
 
@@ -155,89 +154,34 @@ int main(void)
 	/**
 	* Transmit data to the gateway about what's here.
 	*/
-	bool connected = false;
 	RTCDRV_StartTimer(
 		  rtc_id, 						// RTC ID
 		  rtcdrvTimerTypePeriodic, 		// Type
-		  10000, 						// Amount (milliseconds)
+		  MS_TO_SLEEP, 					// Amount (milliseconds)
 		  NULL, 						// Callback Function
 		  NULL);						// Garbage User Data
 
-	discover_packet discover;
-	discover.packet_type = discover_packet_type;
-	char temp_msg[] = "I'm here!\n\0";
-	for(uint8_t i = 0; i < (sizeof(temp_msg)/sizeof(char)); i++)
-	{
-	  discover.message[i] = temp_msg[i];
-	}
-	uint32_t lastMsTicks = millis();
-	while(!connected)
-	{
-		if(millis() - lastMsTicks > 1)
-		{
-			SLEEP_Sleep();
-			lastMsTicks = millis();
-		}
-		transmit_packet(&discover, discover_packet_size);
-		if(receive_packet(&discover, discover_packet_size))
-		{
-			char password[] = "I hear you";
-			uint8_t i = 0;
-			for(i = 0; i < (sizeof(password) / sizeof(char)); i++)
-			{
-				if(!(discover.message[i] == password[i]))
-					i = 100;
-			}
-			if(i != 100)
-			{
 
-				receive_packet(&node_provision_packet, provision_packet_size);
-				reconfigure_radio(&node_provision_packet);
-				lastMsTicks = 	millis();
-				node_info_packet buf;
-				buf.packet_type = node_info_packet_type;
-				if(si_available) buf.si7020_available = 1;
-				else buf.si7020_available = 0;
-				if(bmp_available) buf.bmp280_available = 1;
-				else buf.bmp280_available = 0;
-				delay(5);
 #if defined (HARDWARE_VERSION_2_0)
-				buf.VBUS_available = GPIO_PinInGet(gpioPortB, 14);
-				buf.hardware_revision[0] = '2';
-				buf.hardware_revision[1] = '0';
+	data.VBUS_available = GPIO_PinInGet(gpioPortB, 14);
+	data.hardware_revision[0] = '2';
+	data.hardware_revision[1] = '1';
 
 #elif defined (HARDWARE_VERSION_1_0)
-				buf.VBUS_available = 0;
-				buf.hardware_revision[0] = '1';
-				buf.hardware_revision[1] = '0';
+	data.VBUS_available = 0;
+	data.hardware_revision[0] = '1';
+	data.hardware_revision[1] = '1';
 #else
-				buf.VBUS_available = 0;
-				buf.hardware_revision[0] = '0';
-				buf.hardware_revision[1] = '0';
+	data.VBUS_available = 0;
+	data.hardware_revision[0] = '0';
+	data.hardware_revision[1] = '1';
 #endif
-				buf.unique_id_0 =  *(uint32_t*)0xFE081F0;
-				buf.unique_id_1 =  *(uint32_t*)0xFE081F4;
-				transmit_packet(&buf, node_info_packet_size);
-				RTCDRV_StopTimer(rtc_id);
-				RTCDRV_StartTimer(
-							  rtc_id, 						// RTC ID
-							  rtcdrvTimerTypePeriodic, 		// Type
-							  node_provision_packet.mswait,	// Amount (milliseconds)
-							  NULL, 						// Callback Function
-							  NULL);						// Garbage User Data
-				SLEEP_Sleep();
-				connected = true;
-			}
+	data.unique_id_0 =  *(uint32_t*)0xFE081F0;
+	data.unique_id_1 =  *(uint32_t*)0xFE081F4;
+	data.packet_type = minimalist_packet_type;
+	data.bmp280_available = bmp_available;
+	data.si7020_available = si_available;
 
-		}
-	}
-
-	gateway_ack_packet ack;
-	ack.packet_type = gateway_ack_packet_type;
-	ack.msWait = MS_DELAY_BETWEEN_PACKETS;
-	uint8_t failures = 0;
-	node_data.packet_type = node_data_packet_type;
-	node_data.node_id = node_provision_packet.node_id;
 	/* Infinite loop */
 	while (1) {
 
@@ -245,32 +189,8 @@ int main(void)
 		read_sensors();
 
 		// Transmit the data
-		transmit_packet(&node_data, node_data_packet_size);
+		transmit_packet(&data, minimalist_packet_size);
 
-		// Attempt to receive a packet
-		if(!receive_packet(&ack, gateway_ack_packet_size))
-		{
-			failures++;
-		}
-		else
-		{
-			failures = 0;
-		}
-		println("msWait: %i", ack.msWait);
-
-		// If we failed x times in a row, invoke a SW reset.
-		if(failures == 8)
-		{
-			NVIC_SystemReset();
-		}
-
-		// Start the timer again
-		RTCDRV_StartTimer(
-				  rtc_id, 						// RTC ID
-				  rtcdrvTimerTypeOneshot, 		// Type
-				  ack.msWait,					// Amount (milliseconds)
-				  NULL, 						// Callback Function
-				  NULL);						// Garbage User Data
 		prepare_sleep();
 		SLEEP_Sleep();
 		prepare_wakeup();
