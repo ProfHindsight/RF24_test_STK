@@ -165,16 +165,16 @@ int main(void)
 #if defined (HARDWARE_VERSION_2_0)
 	data.VBUS_available = GPIO_PinInGet(gpioPortB, 14);
 	data.hardware_revision[0] = '2';
-	data.hardware_revision[1] = '1';
+	data.hardware_revision[1] = '0';
 
 #elif defined (HARDWARE_VERSION_1_0)
 	data.VBUS_available = 0;
 	data.hardware_revision[0] = '1';
-	data.hardware_revision[1] = '1';
+	data.hardware_revision[1] = '0';
 #else
 	data.VBUS_available = 0;
 	data.hardware_revision[0] = '0';
-	data.hardware_revision[1] = '1';
+	data.hardware_revision[1] = '0';
 #endif
 	data.unique_id_0 =  *(uint32_t*)0xFE081F0;
 	data.unique_id_1 =  *(uint32_t*)0xFE081F4;
@@ -187,6 +187,9 @@ int main(void)
 
 		// Read the sensors
 		read_sensors();
+#if defined (HARDWARE_VERSION_2_0)
+	data.VBUS_available = GPIO_PinInGet(gpioPortB, 14);
+#endif
 
 		// Transmit the data
 		transmit_packet(&data, minimalist_packet_size);
